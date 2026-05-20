@@ -1,52 +1,34 @@
 # Unistock
 
-O **Unistock** é um sistema web desenvolvido para auxiliar no gerenciamento de lojas, produtos, estoque e pedidos. O objetivo do projeto é oferecer uma plataforma simples, organizada e intuitiva para facilitar o controle das informações comerciais de pequenos negócios, lojas e empreendedores.
+Sistema web desenvolvido para gerenciamento de estoque, produtos, lojas e usuários.
 
-## Acesse o projeto
+## Repositórios do projeto
 
-Projeto publicado na Vercel:
+### Frontend
 
-https://5-periodo.vercel.app
+Repositório responsável pela interface web da aplicação.
 
-## Sobre o projeto
+- Tecnologias: Next.js, React, Tailwind CSS
+- Deploy: Vercel
 
-O Unistock permite que usuários realizem o controle de produtos, acompanhem informações de estoque e gerenciem dados importantes relacionados à loja. A aplicação foi pensada para melhorar a organização das atividades do negócio, reduzir erros manuais e tornar o processo de gestão mais prático.
+Acesse o repositório:
 
-## Funcionalidades
+https://github.com/znt10/Unistock_Front
 
-- Cadastro e gerenciamento de produtos
-- Controle de estoque
-- Visualização de informações da loja
-- Gerenciamento de pedidos
-- Sistema de login e autenticação
-- Interface responsiva e intuitiva
-- Organização das informações em páginas específicas
+### Backend
 
-## Tecnologias utilizadas
+Repositório responsável pela API, autenticação, regras de negócio e banco de dados.
 
-### Front-end
+- Tecnologias: Django, Django REST Framework
+- Deploy: Railway
 
-- Next.js
-- React
-- TypeScript
-- Tailwind CSS
-- Vercel
+Acesse o repositório:
 
-### Back-end
+https://github.com/znt10/Unistock_Back
 
-- Django
-- Django REST Framework
-- JWT Authentication
-- Banco de dados relacional
-- Railway
+## Estrutura geral
 
-## Objetivo
-
-O principal objetivo do projeto é oferecer uma solução web para controle de estoque e gerenciamento de produtos, permitindo que o usuário tenha uma visão mais clara sobre os itens cadastrados, pedidos realizados e informações da loja.
-
-## Como executar o projeto localmente
-
-### Clonar o repositório
-
-```bash
-git clone https://github.com/znt10/Unistock.git
+```txt
+Unistock
+├── Unistock_Front
+└── Unistock_Back
