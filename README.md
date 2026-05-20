@@ -49,4 +49,4 @@ O principal objetivo do projeto é oferecer uma solução web para controle de e
 ### Clonar o repositório
 
 ```bash
-git clone 
+git clone https://github.com/znt10/Unistock.git
