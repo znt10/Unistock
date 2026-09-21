@@ -7,13 +7,13 @@
 Cada unidade enxerga o próprio estoque. O gerente enxerga todas.
 Quando um produto cruza o mínimo, o responsável recebe um aviso antes de faltar.
 
-[![Demo](https://img.shields.io/badge/demo-online-2ea44f?style=flat-square)](https://5-periodo.vercel.app/)
+[![Produção](https://img.shields.io/badge/produ%C3%A7%C3%A3o-unistock.online-2ea44f?style=flat-square)](https://unistock.online/login)
 [![Backend](https://img.shields.io/badge/backend-Django%20%2B%20DRF-092E20?style=flat-square&logo=django)](https://github.com/znt10/Unistock_Back)
 [![Frontend](https://img.shields.io/badge/frontend-Next.js%2016-000000?style=flat-square&logo=nextdotjs)](https://github.com/znt10/Unistock_Front)
 [![WhatsApp Bot](https://img.shields.io/badge/whatsapp-bot%20integrado-25D366?style=flat-square&logo=whatsapp)](#bot-de-whatsapp)
 [![License](https://img.shields.io/badge/licen%C3%A7a-MIT-blue?style=flat-square)](#licença)
 
-[**Ver demo**](https://5-periodo.vercel.app/) &middot;
+[**Acessar o sistema**](https://unistock.online/login) &middot;
 [Backend](https://github.com/znt10/Unistock_Back) &middot;
 [Frontend](https://github.com/znt10/Unistock_Front) &middot;
 [Documentação](#documentação)
@@ -37,6 +37,8 @@ O UniStock fecha esse ciclo:
 | 🔁 **Pedido de reposição** | o responsável pede pelo sistema; o gerente acompanha e muda o status |
 | 🧾 **PDV integrado** | a venda dá baixa no estoque na hora |
 | 💬 **Bot de WhatsApp** | consulta catálogo, abre pedido e dá baixa manual no estoque, direto do zap da loja |
+| 🏭 **Fábrica e etiquetas** | a fábrica recebe os pedidos das lojas e imprime uma etiqueta com QR por caixa |
+| 📱 **Leitura das caixas** | a loja lê o QR no celular: chegou, aberta, acabou — o estoque anda sozinho, com desfazer |
 | 👤 **Acesso por perfil** | Admin, Gerente e Responsável enxergam coisas diferentes — e isso vale na API, não só na tela |
 
 **Stack:** Django + DRF + MySQL + Celery no backend, Next.js 16 + TypeScript no
@@ -92,6 +94,12 @@ restrição não depende da interface.
 - Notificações por email, enviadas de forma assíncrona (Celery + Redis)
 - Bot de WhatsApp: consulta de catálogo, abertura de pedido e baixa manual de
   estoque — restrito ao número já cadastrado de cada loja
+- Várias empresas no mesmo sistema, cada uma com o próprio catálogo e lojas
+- Fábrica própria: fila de pedidos das lojas, registro de produção e etiqueta
+  térmica 60×40 com QR por caixa
+- Leitura das caixas na loja pelo celular (o site instala como aplicativo):
+  cada leitura do QR avança a caixa — chegou, aberta, acabou — e move o estoque
+  da fábrica para a loja, com desfazer e a lista do que ainda está a caminho
 
 ---
 
@@ -228,11 +236,27 @@ sessão por XSS.
 
 ---
 
+## Deploy
+
+Produção roda numa VPS com **Coolify**, em
+[unistock.online](https://unistock.online/login). Cada repositório tem o próprio
+`docker-compose.prod.yml`, que o Coolify usa como Compose:
+
+| Serviço | Repositório | Compose |
+|---|---|---|
+| API, MySQL, Redis, Celery | [Unistock_Back](https://github.com/znt10/Unistock_Back) | `docker-compose.prod.yml` |
+| Interface (Next.js) | [Unistock_Front](https://github.com/znt10/Unistock_Front) | `frontend/docker-compose.prod.yml` |
+
+O deploy sai do branch `main` de cada repositório. O trabalho do dia a dia vai
+para `dev-local` e chega ao `main` por pull request.
+
+---
+
 ## Documentação
 
 | Recurso | Link |
 |---|---|
-| Demo | [5-periodo.vercel.app](https://5-periodo.vercel.app/) |
+| Produção | [unistock.online/login](https://unistock.online/login) |
 | Swagger (API) | `http://localhost:8000/api/schema/swagger/` (local) |
 | Redoc (API) | `http://localhost:8000/api/schema/redoc/` (local) |
 | README do backend | [Unistock_Back](https://github.com/znt10/Unistock_Back) |
@@ -262,9 +286,9 @@ estoque"**: cada centro de distribuição gerencia o próprio inventário e os
 pedidos fluem entre eles conforme a demanda. É o mesmo arranjo das operações
 logísticas grandes, onde cada galpão regional tem estoque próprio.
 
-O bot de WhatsApp já está no ar (catálogo, pedido e baixa de estoque); o
-próximo passo desse canal é o caminho contrário — um webhook que recebe o que
-o usuário manda pelo WhatsApp, hoje o bot só responde ao que o backend inicia.
+O bot de WhatsApp já recebe os comandos da loja pelo webhook da Evolution API
+(catálogo, pedido, confirmação e baixa de estoque); falta ligar o número
+dedicado em produção.
 
 ---
 
